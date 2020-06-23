@@ -32,7 +32,11 @@ const kittyPrompts = {
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // An array of objects with name, age, and color properties
+    // Want the result to be an array of only the orange cat names
+    // Filter to access orange cats
+    // Only looking for the cats
+    // Use map on filtered cats and get back their name property
   },
 
   sortByAge() {
