@@ -42,11 +42,16 @@ const kittyPrompts = {
   sortByAge() {
     // Sort the kitties by their age
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.sort((a, b) => {
+      return b.age - a.age;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // An array of objects with name, age, and color properties
+    // Sort the kitties by the age property from oldest to youngest
+    // Want the result to be an array of objects sorted by the age of the cats
+    // Use sort method descending to get new array of objects
   },
 
   growUp() {
