@@ -102,7 +102,7 @@ const kittyPrompts = {
 
 // DATASET: clubs from ./datasets/clubs
 const clubPrompts = {
-  membersBelongingToClubs() {
+  membersBelongingToClubs(clubMemberInfo) {
     // Create an object whose keys are the names of people, and whose values are
     // arrays that include the names of the clubs that person is a part of. e.g.
     // {
@@ -111,11 +111,14 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = clubMemberInfo;
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // An array of objects with club and members properties
+    // Want the result to be an object with keys being names and values being an array of clubs they belong to
+    // This info is being passed through as an argument in the membersBelongingToClubs method test file
+    // Pass this info through as a parameter
   }
 };
 
