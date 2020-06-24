@@ -68,10 +68,21 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = this.sortByAge().map(kitty => {
+      kitty.age += 2;
+      return kitty;
+    });
     return result;
+
+    // Annotation:
+    // An array of objects with name, age, and color properties
+    // Use map to add two to the age property of each cat object
+    // Chain sortByAge method to sort ages descending
+    // Want the result to be an array of objects sorted by the new age of the cats
   }
 };
+
+
 
 
 
