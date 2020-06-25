@@ -150,11 +150,19 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = mods.map(mod => {
+      mod.studentsPerInstructor = mod.students / mod.instructors;
+      delete mod.students;
+      delete mod.instructors;
+      return mod;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // An array of objects with mod, students and instructor properties
+    // Want the result to be an array of objects with mod and studentsPerInstructor properties
+    // Use map to modify the properties in the array of objects
+    // Do calculation to add studentsPerInstructor property and then delete students and instructors properties
   }
 };
 
