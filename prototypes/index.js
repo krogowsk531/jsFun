@@ -193,11 +193,18 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.map(cake => {
+      return {
+        flavor: cake.cakeFlavor,
+        inStock: cake.inStock
+      };
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Given an array of objects with cakeFlavor, filling, frosting, toppings and inStock properties
+    // Want the result to be an array of objects with flavor and inStock properties
+    // Use map to modify the properties in the array of objects
   },
 
   onlyInStock() {
