@@ -241,11 +241,14 @@ const cakePrompts = {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = this.onlyInStock().reduce((sum, stock) => sum + stock.inStock, 0);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Given an array of objects with cakeFlavor, filling, frosting, toppings and inStock properties
+    // Use reduce to sum up the number of cakes in stock for each cake object
+    // Chain onlyInStock method to filter the number objects with cakes in stock
+    // Want the result to be the sum of all inStock properties on the array of objects which is 59
   },
 
   allToppings() {
