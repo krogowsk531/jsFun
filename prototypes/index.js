@@ -256,11 +256,16 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.map(cake => cake.toppings)
+      .reduce((arr, topping) => [...arr, ...topping],[])
+      .reduce((arr, el) => {if (!arr.includes(el)) {arr.push(el);} return arr;}, []);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Given an array of objects with cakeFlavor, filling, frosting, toppings and inStock properties
+    // Use map to create an array of arrays that are full of the toppings property for each object
+    // Use reduce to flatten the arrays resulting in one array of strings of the toppings
+    // Use reduce again to prevent any duplicate toppings in the array of strings
   },
 
   groceryList() {
