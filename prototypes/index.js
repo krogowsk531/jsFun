@@ -279,11 +279,25 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+
+
+    const result = cakes.reduce((acc, cake) => {
+      cake.toppings.forEach(topping => {
+        if(acc[topping] === undefined) {
+          acc[topping] = 1;
+        } else {
+          acc[topping]++;
+        }
+      });
+      return acc;
+    }, {});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Given an array of objects with cakeFlavor, filling, frosting, toppings and inStock properties
+    // Use reduce to create an object
+    // The object property must contain the name of toppings (key) and the amount of the topping in the dataset (value)
+    // Use forEach to iterate over the array and increase the topping amount if there is more than one of the same topping in the arrays
   }
 };
 
