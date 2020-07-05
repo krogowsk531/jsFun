@@ -328,11 +328,12 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.filter(whichProgram => whichProgram.program === 'FE');
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Given an array of objects with roomLetter, program and capacity properties
+    // Use filter to return an array of objects with only program value of FE
   },
 
   totalCapacities() {
