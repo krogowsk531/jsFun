@@ -344,11 +344,23 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.reduce((acc, classroom) => {
+      if(classroom.program === 'FE') {
+        acc.feCapacity += classroom.capacity;
+      } else {
+        acc.beCapacity += classroom.capacity;
+      }
+      return acc;
+    }, {feCapacity: 0, beCapacity: 0});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //start with an array of objects
+    //want one object with two key value pairs
+    //new keys
+    //reduce (whenever you are trying to build something)
+    //if classroom.program = 'FE' add to feCapacity
+    //else add to the beCapacity
   },
 
   sortByCapacity() {
