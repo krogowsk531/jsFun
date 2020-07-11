@@ -376,7 +376,7 @@ const classPrompts = {
     //start with an array of objects
     //want an array of objects with properties of roomLetter, program and capacity
     //want to sort by capacity ascending
-  
+
   }
 };
 
@@ -399,11 +399,13 @@ const bookPrompts = {
     //   'Catch-22', 'Treasure Island']
 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = books.filter(book => book.genre !== 'Horror' && book.genre !== 'True Crime').map(book => book.title);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //start with an array of objects
+    //want to filter out any book titles that are horror or true crime
+    //want to return an array of strings with property of title
 
   },
   getNewBooks() {
