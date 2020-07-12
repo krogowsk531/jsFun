@@ -416,11 +416,21 @@ const bookPrompts = {
     //  { title: 'Life of Pi', year: 2001 },
     //  { title: 'The Curious Incident of the Dog in the Night-Time', year: 2003 }]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = books.filter(year => year.published > 1989).map(book => {
+      delete book.author;
+      delete book.genre;
+      return book;
+    }).map(book => {
+      return {title: book.title, year: book.published};
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //start with an array of objects
+    //want to filter out any books that were published before 1989
+    //want to remove author and genre properties from object
+    //want to change the name of the published propert to published
+    //return an array of filtered objects with title and year properties
   }
 
 };
