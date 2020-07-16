@@ -465,11 +465,18 @@ const weatherPrompts = {
     // 'New Orleans, Louisiana is sunny.',
     // 'Raleigh, North Carolina is mostly sunny.' ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = weather.filter(weather => {
+      return weather.type === 'mostly sunny' || weather.type === 'sunny';
+    }).map(weather => {
+      return `${weather.location} is ${weather.type}.`;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //start with an array of objects
+    //filter out the cities where the weather type is either 'mostly sunny' or 'sunny'
+    //using map return 'the location is sunny' accessing the location and type properties
+    //in an array
   },
 
   findHighestHumidity() {
