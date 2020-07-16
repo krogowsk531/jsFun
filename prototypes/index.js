@@ -488,11 +488,15 @@ const weatherPrompts = {
     //   temperature: { high: 49, low: 38 }
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = weather.sort((a, b) => {
+      return b.humidity - a.humidity;
+    })[0];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // start with an array of objects
+    //sort the objects in descending order by humidity
+    //access the first object in the array by index
 
   }
 };
