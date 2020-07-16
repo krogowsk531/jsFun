@@ -432,7 +432,6 @@ const bookPrompts = {
     //want to change the name of the published propert to published
     //return an array of filtered objects with title and year properties
   }
-
 };
 
 
@@ -449,11 +448,14 @@ const weatherPrompts = {
     // return an array of all the average temperatures. Eg:
     // [ 40, 40, 44.5, 43.5, 57, 35, 65.5, 62, 14, 46.5 ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = weather.map(day => (day.temperature.high + day.temperature.low)/2);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //start with an array of objects
+    //sum the temperature nested object
+    //divide the result by 2
+    //return an array of using map average temperatures
   },
 
   findSunnySpots() {
