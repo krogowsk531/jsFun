@@ -519,11 +519,21 @@ const nationalParksPrompts = {
     //   parksVisited: ["Rocky Mountain", "Acadia", "Zion"]
     //}
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = nationalParks.reduce((acc, park) => {
+      if (park.visited === false) {
+        acc.parksToVisit.push(park.name);
+      } else {
+        acc.parksVisited.push(park.name);
+      }
+      return acc;
+    }, {'parksToVisit': [], 'parksVisited': []});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // start with an array of objects
+    //want to create two new properties, parksToVisit & parksVisited
+    //use reduce to push into new arrays if indicated
+    //return an object with a new property as a key and an array of names as a new value
   },
 
   getParkInEachState() {
