@@ -558,7 +558,7 @@ const nationalParksPrompts = {
     //value will be park.name
     //use map to get to the result
   },
-  
+
   getParkActivities() {
     // Return an array of all the activities I can do
     // in a National Park. Make sure to exclude duplicates. eg:
@@ -575,11 +575,18 @@ const nationalParksPrompts = {
     //   'backpacking',
     //   'rock climbing' ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = nationalParks.map(park => {
+      return park.activities;
+    }).reduce((arr, activities) => [...arr, ...activities], [])
+      .reduce((arr, element) => {if (!arr.includes(element)) {arr.push(element);} return arr;}, []);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // start with an array of objects
+    //want to return an array of strings
+    //use map to get an array of arrays
+    //use reduce to flatten the array
+    //use reduce to make sure there are no duplicates
   }
 };
 
