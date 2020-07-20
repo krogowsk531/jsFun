@@ -609,11 +609,16 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.map(beer => {
+      return beer.beers.length;
+    }).reduce((a, b) => a + b, 0);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // start with an array of objects
+    //want to return an number
+    //use map to get an array of number of beers in each brewery
+    //use reduce to sum all of the values in the array
   },
 
   getBreweryBeerCount() {
