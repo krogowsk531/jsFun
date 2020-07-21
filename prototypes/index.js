@@ -630,11 +630,22 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.map(brewery => {
+      let obj = {};
+      obj.name = brewery.name;
+      obj.beerCount = brewery.beers.length;
+      return obj;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // start with an array of objects
+    //want to return a new array of objects
+    //key will be the name of the brewery
+    //value will be the number of beers the brewery has
+    //use map to get a new array
+    //declare an empty object
+    //assign the new properties and return the new object
   },
 
   findHighestAbvBeer() {
