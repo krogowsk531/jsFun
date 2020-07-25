@@ -708,11 +708,19 @@ const turingPrompts = {
     //  { name: 'Robbie', studentCount: 18 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = instructors.map(instructor => {
+      const cohortMatch = cohorts.find(cohort => {
+        return instructor.module === cohort.module;
+      });
+      return {name: instructor.name, studentCount: cohortMatch.studentCount};
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //studentCount is a property from cohorts
+    //output is one array of objects
+    //use map because we are taking in two data sets and returning one wiht new properties
+    //in order to access the module data when need to use find return first instance where cohort.module equals instructor.module
   },
 
   studentsPerInstructor() {
