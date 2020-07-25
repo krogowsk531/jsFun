@@ -653,11 +653,18 @@ const breweryPrompts = {
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.map(brewery => {
+      return brewery.beers;
+    }).reduce((acc, oneBreweryBeers) => [...acc, ...oneBreweryBeers], []).sort((a, b) => b.abv - a.abv)[0];
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //start with an array of brewery objects
+    //generate an array of all of the beers
+    //use map to get an array of all of the beer objects
+    //use sort highest to lowest by abv
+    //return index 0 of the array
+    //end with the beer object that has the highest abv
   }
 };
 
