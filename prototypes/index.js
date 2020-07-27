@@ -730,11 +730,25 @@ const turingPrompts = {
     // cohort1804: 10.5
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cohorts.reduce((newObj, cohort) => {
+      let instructorsPerMod = instructors.filter(instructor => {
+        return instructor.module === cohort.module;
+      });
+      let newKey = 'cohort' + cohort.cohort;
+      let total = cohort.studentCount / instructorsPerMod.length;
+      newObj[newKey] = total;
+      return newObj;
+    }, {});
+
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Using two array of object datasets
+    // Filter through each instructor to find where the modules match in each data set
+    // concatenate the new key name
+    // get the total by dividing student count by instructors per mod
+    // assign the total to those values
+    //return the new object with new key value pairs
   },
 
   modulesPerTeacher() {
