@@ -766,11 +766,31 @@ const turingPrompts = {
     //     Will: [1, 2, 3, 4]
     //   }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = instructors.reduce((acc, instructor) => {
+      cohorts.forEach(cohort => {
+        cohort.curriculum.forEach(lesson => {
+          if (!acc[instructor.name]) {
+            acc[instructor.name] = [];
+          }
+          if (instructor.teaches.includes(lesson)) {
+            acc[instructor.name].push(cohort.module);
+          }
+        });
+      });
+      acc[instructor.name] = [...new Set(acc[instructor.name])];
+      return acc;
+    }, {});
+
+
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // start with two arrays of objects
+    // use a reduce on the instructors array of objects
+    // use a for each to loop through the cohort curriculum
+    // use a for each to check the teaches array and see if a lesson is included
+    // if so push the module into the array for the mods a teacher teaches
+    // return an object with instructor name and the mods that they teach
   },
 
   curriculumPerTeacher() {
