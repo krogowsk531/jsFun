@@ -27,16 +27,19 @@ const kittyPrompts = {
 
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
-    const result = kitties.filter(cat => cat.color === 'orange')
-      .map(orangeCat => orangeCat.name);
+    const result = kitties.filter(kitty => {
+      return kitty.color === 'orange';
+    }).map(kitty => {
+      return kitty.name;
+    });
     return result;
 
     // Annotation:
-    // An array of objects with name, age, and color properties
-    // Want the result to be an array of only the orange cat names
-    // Filter to access orange cats
-    // Only looking for the cats
-    // Use map on filtered cats and get back their name property
+    //start with an array of objects
+    //filter through objects to find if a kittys color is orange
+    //that will return the objects where the color is orange
+    //chain map in order to get back an array of just kitty names
+
   },
 
   sortByAge() {
@@ -48,10 +51,10 @@ const kittyPrompts = {
     return result;
 
     // Annotation:
-    // An array of objects with name, age, and color properties
-    // Sort the kitties by the age property from oldest to youngest
-    // Want the result to be an array of objects sorted by the age of the cats
-    // Use sort method descending to get new array of objects
+    //start with an array of objects
+    //sort through the objects by the kitty age
+    //return an array of kitty objects that is sorted from oldest to youngest
+
   },
 
   growUp() {
@@ -68,17 +71,19 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-    const result = this.sortByAge().map(kitty => {
+    const result = kitties.sort((a, b) => {
+      return b.age - a.age;
+    }).map(kitty => {
       kitty.age += 2;
       return kitty;
     });
     return result;
 
     // Annotation:
-    // An array of objects with name, age, and color properties
-    // Use map to add two to the age property of each cat object
-    // Chain sortByAge method to sort ages descending
-    // Want the result to be an array of objects sorted by the new age of the cats
+    //given an array of kitty objects with an age property
+    //sort by age from highest to lowest
+    //then map to add 2 to each kitties age
+
   }
 };
 
@@ -115,10 +120,10 @@ const clubPrompts = {
     return result;
 
     // Annotation:
-    // An array of objects with club and members properties
-    // Want the result to be an object with keys being names and values being an array of clubs they belong to
-    // This info is being passed through as an argument in the membersBelongingToClubs method test file
-    // Pass this info through as a parameter
+    //the object is passed through as an argument
+    //pass the argument through the method
+    //return the argument
+
   }
 };
 
@@ -150,19 +155,21 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    const result = mods.map(mod => {
-      mod.studentsPerInstructor = mod.students / mod.instructors;
-      delete mod.students;
-      delete mod.instructors;
-      return mod;
-    });
+    const result = mods.map(mod => ({...mod, studentsPerInstructor: mod.students / mod.instructors})).filter(property => {
+      delete property.students
+      delete property.instructors
+      return true;
+    })
     return result;
 
     // Annotation:
-    // An array of objects with mod, students and instructor properties
-    // Want the result to be an array of objects with mod and studentsPerInstructor properties
-    // Use map to modify the properties in the array of objects
-    // Do calculation to add studentsPerInstructor property and then delete students and instructors properties
+    //given an array of objects
+    //create a new object
+    //remove student and instructor properties
+    //add studentsPerInstructor
+    //studentsPerInstructor are students/instructors
+    //return the array of objects with a different set of properties
+
   }
 };
 
@@ -194,17 +201,13 @@ const cakePrompts = {
     // ]
 
     const result = cakes.map(cake => {
-      return {
-        flavor: cake.cakeFlavor,
-        inStock: cake.inStock
-      };
-    });
+      return {flavor: cake.cakeFlavor, inStock: cake.inStock}
+    })
     return result;
 
     // Annotation:
-    // Given an array of objects with cakeFlavor, filling, frosting, toppings and inStock properties
-    // Want the result to be an array of objects with flavor and inStock properties
-    // Use map to modify the properties in the array of objects
+    // use map to create an new object with one new property and an existing property
+
   },
 
   onlyInStock() {
@@ -228,27 +231,30 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = cakes.filter(cake => cake.inStock > 0);
+    const result = cakes.filter(cake => {
+      return cake.inStock > 0
+    })
     return result;
 
     // Annotation:
-    // Given an array of objects with cakeFlavor, filling, frosting, toppings and inStock properties
-    // Want the result to be an array of objects that contains only the cake objects that are in stock
-    // Use filter to return a new array of cakes that are in stock
+    //filter through the cakes array of objects
+    //return as part of the array if inStock > 0
+
   },
 
   totalInventory() {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = this.onlyInStock().reduce((sum, stock) => sum + stock.inStock, 0);
+    const result = cakes.map(cake => {
+      return cake.inStock
+    }).reduce((a, b) => a + b, 0)
     return result;
 
     // Annotation:
-    // Given an array of objects with cakeFlavor, filling, frosting, toppings and inStock properties
-    // Use reduce to sum up the number of cakes in stock for each cake object
-    // Chain onlyInStock method to filter the number objects with cakes in stock
-    // Want the result to be the sum of all inStock properties on the array of objects which is 59
+    //use map to get an array of the instock values
+    //use reduce to sum the array
+
   },
 
   allToppings() {
@@ -256,16 +262,16 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = cakes.map(cake => cake.toppings)
-      .reduce((arr, topping) => [...arr, ...topping],[])
-      .reduce((arr, el) => {if (!arr.includes(el)) {arr.push(el);} return arr;}, []);
+    const result = cakes.map(cake => {
+      return cake.toppings
+    }).reduce((arr, cake) => [...arr, ...cake], []).reduce((arr, cake) => {if (!arr.includes(cake)) {arr.push(cake);} return arr}, []);
     return result;
 
     // Annotation:
-    // Given an array of objects with cakeFlavor, filling, frosting, toppings and inStock properties
-    // Use map to create an array of arrays that are full of the toppings property for each object
-    // Use reduce to flatten the arrays resulting in one array of strings of the toppings
-    // Use reduce again to prevent any duplicate toppings in the array of strings
+    //use map to get an array of arrays of toppings
+    //use reduce to flatten those arrays
+    //use reduce to remove any duplicates
+
   },
 
   groceryList() {
@@ -283,21 +289,24 @@ const cakePrompts = {
 
     const result = cakes.reduce((acc, cake) => {
       cake.toppings.forEach(topping => {
-        if(acc[topping] === undefined) {
+        if (acc[topping] === undefined) {
           acc[topping] = 1;
         } else {
           acc[topping]++;
         }
-      });
-      return acc;
-    }, {});
+      })
+      return acc
+    }, {})
     return result;
 
     // Annotation:
-    // Given an array of objects with cakeFlavor, filling, frosting, toppings and inStock properties
-    // Use reduce to create an object
-    // The object property must contain the name of toppings (key) and the amount of the topping in the dataset (value)
-    // Use forEach to iterate over the array and increase the topping amount if there is more than one of the same topping in the arrays
+    //use reduce to return an object with different properties
+    //go through each topping using forEach
+    //if the acc topping is undefined
+    //acc topping equals 1
+    //otherwise acc topping increases
+    //return the acc
+
   }
 };
 
@@ -328,12 +337,15 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = classrooms.filter(whichProgram => whichProgram.program === 'FE');
+    const result = classrooms.filter(classroom => {
+      return classroom.program === 'FE'
+    })
     return result;
 
     // Annotation:
-    // Given an array of objects with roomLetter, program and capacity properties
-    // Use filter to return an array of objects with only program value of FE
+    //filter classrooms by program
+    //program === 'FE'
+
   },
 
   totalCapacities() {
@@ -346,21 +358,20 @@ const classPrompts = {
 
     const result = classrooms.reduce((acc, classroom) => {
       if(classroom.program === 'FE') {
-        acc.feCapacity += classroom.capacity;
+        acc.feCapacity += classroom.capacity
       } else {
-        acc.beCapacity += classroom.capacity;
+        acc.beCapacity += classroom.capacity
       }
-      return acc;
-    }, {feCapacity: 0, beCapacity: 0});
+      return acc
+    }, {feCapacity: 0, beCapacity: 0})
     return result;
 
     // Annotation:
-    //start with an array of objects
-    //want one object with two key value pairs
-    //new keys
-    //reduce (whenever you are trying to build something)
-    //if classroom.program = 'FE' add to feCapacity
-    //else add to the beCapacity
+    //use reduce to create a new object from an array of objects
+    //check to see which program
+    //add up the capacity for the new property names
+    //set object with new property names and a result of 0
+
   },
 
   sortByCapacity() {
@@ -368,14 +379,14 @@ const classPrompts = {
 
     const result = classrooms.sort((a, b) => {
       return a.capacity - b.capacity;
+    })
 
-    });
     return result;
 
     // Annotation:
-    //start with an array of objects
-    //want an array of objects with properties of roomLetter, program and capacity
-    //want to sort by capacity ascending
+    //sort through the classrooms by their capacity in ascending order
+
+
 
   }
 };
@@ -399,13 +410,17 @@ const bookPrompts = {
     //   'Catch-22', 'Treasure Island']
 
 
-    const result = books.filter(book => book.genre !== 'Horror' && book.genre !== 'True Crime').map(book => book.title);
+    const result = books.filter(book => {
+      return !book.genre.includes('Horror') && !book.genre.includes('True Crime')
+    }).map(book => {
+      return book.title
+    })
     return result;
 
     // Annotation:
-    //start with an array of objects
-    //want to filter out any book titles that are horror or true crime
-    //want to return an array of strings with property of title
+    //filter through books to not include horror or true crime titles
+    //map to get an array of the titles of the books
+
 
   },
   getNewBooks() {
@@ -416,21 +431,22 @@ const bookPrompts = {
     //  { title: 'Life of Pi', year: 2001 },
     //  { title: 'The Curious Incident of the Dog in the Night-Time', year: 2003 }]
 
-    const result = books.filter(year => year.published > 1989).map(book => {
-      delete book.author;
-      delete book.genre;
-      return book;
+    const result = books.filter(book => {
+      return book.published > 1989
+    }).filter(book => {
+      delete book.author
+      delete book.genre
+      return true;
     }).map(book => {
-      return {title: book.title, year: book.published};
-    });
+      return {title: book.title, year: book.published}
+    })
     return result;
 
     // Annotation:
-    //start with an array of objects
-    //want to filter out any books that were published before 1989
-    //want to remove author and genre properties from object
-    //want to change the name of the published propert to published
-    //return an array of filtered objects with title and year properties
+    //use filter to get all books published in the 90s an 00s
+    //use filter to delete two properties
+    //use map to change the key of a property
+
   }
 };
 
@@ -448,14 +464,16 @@ const weatherPrompts = {
     // return an array of all the average temperatures. Eg:
     // [ 40, 40, 44.5, 43.5, 57, 35, 65.5, 62, 14, 46.5 ]
 
-    const result = weather.map(day => (day.temperature.high + day.temperature.low)/2);
+    const result = weather.map(temp => {
+      return (temp.temperature.high + temp.temperature.low) / 2
+    })
     return result;
 
     // Annotation:
-    //start with an array of objects
-    //sum the temperature nested object
-    //divide the result by 2
-    //return an array of using map average temperatures
+    //use map to get an array of objects with high and low temps
+    //add the high and low temps together
+    //divide by two
+
   },
 
   findSunnySpots() {
@@ -465,18 +483,18 @@ const weatherPrompts = {
     // 'New Orleans, Louisiana is sunny.',
     // 'Raleigh, North Carolina is mostly sunny.' ]
 
-    const result = weather.filter(weather => {
-      return weather.type === 'mostly sunny' || weather.type === 'sunny';
-    }).map(weather => {
-      return `${weather.location} is ${weather.type}.`;
-    });
+    const result = weather.filter(item => {
+      return item.type.includes('mostly sunny') || item.type.includes('sunny')
+    }).map(item => {
+      return `${item.location} is ${item.type}.`
+    })
     return result;
 
     // Annotation:
-    //start with an array of objects
-    //filter out the cities where the weather type is either 'mostly sunny' or 'sunny'
-    //using map return 'the location is sunny' accessing the location and type properties
-    //in an array
+    //use filter to filter objects that are mostly sunny and sunny
+    //use map to create an array of strings with the interpolated location and weather type
+
+
   },
 
   findHighestHumidity() {
@@ -489,14 +507,13 @@ const weatherPrompts = {
     // }
 
     const result = weather.sort((a, b) => {
-      return b.humidity - a.humidity;
-    })[0];
-    return result;
+      return b.humidity - a.humidity
+    })[0]
+    return result
 
     // Annotation:
-    // start with an array of objects
-    //sort the objects in descending order by humidity
-    //access the first object in the array by index
+    //sort the array of objects descending by humidity
+    //return the first index
 
   }
 };
@@ -521,19 +538,20 @@ const nationalParksPrompts = {
 
     const result = nationalParks.reduce((acc, park) => {
       if (park.visited === false) {
-        acc.parksToVisit.push(park.name);
+        acc.parksToVisit.push(park.name)
       } else {
-        acc.parksVisited.push(park.name);
+        acc.parksVisited.push(park.name)
       }
       return acc;
     }, {'parksToVisit': [], 'parksVisited': []});
     return result;
 
     // Annotation:
-    // start with an array of objects
-    //want to create two new properties, parksToVisit & parksVisited
-    //use reduce to push into new arrays if indicated
-    //return an object with a new property as a key and an array of names as a new value
+    //use reduce to create new key value pairs
+    //check to see if a park has been visited
+    //if it has push it into the correct array
+
+
   },
 
   getParkInEachState() {
@@ -547,16 +565,15 @@ const nationalParksPrompts = {
 
 
     const result = nationalParks.map(park => {
-      return { [park.location]: park.name };
-    });
+      return {[park.location]: park.name}
+    })
+
     return result;
 
     // Annotation:
-    // start with an array of objects
-    //want to return an array of objects
-    //key will be park.location
-    //value will be park.name
-    //use map to get to the result
+    //Use map over the array of objects to
+    //create an array of new key value pairs
+
   },
 
   getParkActivities() {
@@ -576,17 +593,17 @@ const nationalParksPrompts = {
     //   'rock climbing' ]
 
     const result = nationalParks.map(park => {
-      return park.activities;
-    }).reduce((arr, activities) => [...arr, ...activities], [])
-      .reduce((arr, element) => {if (!arr.includes(element)) {arr.push(element);} return arr;}, []);
+      return park.activities
+    }).reduce((acc, park) => [...acc, ...park], []).reduce((acc, park) => {
+      if (!acc.includes(park)) {acc.push(park);} return acc;
+    }, [])
     return result;
 
     // Annotation:
-    // start with an array of objects
-    //want to return an array of strings
-    //use map to get an array of arrays
-    //use reduce to flatten the array
+    //use map to get a set of arrays
+    //use reduce to flatten
     //use reduce to make sure there are no duplicates
+
   }
 };
 
@@ -609,16 +626,18 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    const result = breweries.map(beer => {
-      return beer.beers.length;
-    }).reduce((a, b) => a + b, 0);
+    const result = breweries.map(brewery => {
+      return brewery.beers.length
+    }).reduce((a, b) => {
+      return a + b;
+    })
     return result;
 
     // Annotation:
-    // start with an array of objects
-    //want to return an number
-    //use map to get an array of number of beers in each brewery
-    //use reduce to sum all of the values in the array
+    //use map to get a list of all of the beers
+    //add length to the return statement instead of chaining it
+    //sum up the length of the array using reduce
+
   },
 
   getBreweryBeerCount() {
@@ -631,21 +650,19 @@ const breweryPrompts = {
     // ]
 
     const result = breweries.map(brewery => {
-      let obj = {};
-      obj.name = brewery.name;
-      obj.beerCount = brewery.beers.length;
-      return obj;
-    });
+      let obj = {}
+      obj.name = brewery.name
+      obj.beerCount = brewery.beers.length
+      return obj
+    })
     return result;
 
     // Annotation:
-    // start with an array of objects
-    //want to return a new array of objects
-    //key will be the name of the brewery
-    //value will be the number of beers the brewery has
-    //use map to get a new array
-    //declare an empty object
-    //assign the new properties and return the new object
+    //use map to create an empty object
+    //assign the name as a property
+    //assign the beerCount as an additional property
+    //return the obj
+
   },
 
   findHighestAbvBeer() {
@@ -654,17 +671,15 @@ const breweryPrompts = {
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
 
     const result = breweries.map(brewery => {
-      return brewery.beers;
-    }).reduce((acc, oneBreweryBeers) => [...acc, ...oneBreweryBeers], []).sort((a, b) => b.abv - a.abv)[0];
-    return result;
+        return brewery.beers;
+      }).reduce((acc, oneBreweryBeers) => [...acc, ...oneBreweryBeers], []).sort((a, b) => b.abv - a.abv)[0];
+      return result;
 
     // Annotation:
-    //start with an array of brewery objects
-    //generate an array of all of the beers
-    //use map to get an array of all of the beer objects
-    //use sort highest to lowest by abv
-    //return index 0 of the array
-    //end with the beer object that has the highest abv
+    //use map to get an array of beers back
+    //use reduce
+    //use sort to access the highest abv at index zero
+
   }
 };
 
@@ -707,20 +722,17 @@ const turingPrompts = {
     //  { name: 'Pam', studentCount: 21 },
     //  { name: 'Robbie', studentCount: 18 }
     // ]
-
     const result = instructors.map(instructor => {
       const cohortMatch = cohorts.find(cohort => {
-        return instructor.module === cohort.module;
-      });
-      return {name: instructor.name, studentCount: cohortMatch.studentCount};
-    });
+        return instructor.module === cohort.module
+      })
+      return {name: instructor.name, studentCount: cohortMatch.studentCount}
+    })
     return result;
 
     // Annotation:
-    //studentCount is a property from cohorts
-    //output is one array of objects
-    //use map because we are taking in two data sets and returning one wiht new properties
-    //in order to access the module data when need to use find return first instance where cohort.module equals instructor.module
+
+
   },
 
   studentsPerInstructor() {
@@ -730,25 +742,27 @@ const turingPrompts = {
     // cohort1804: 10.5
     // }
 
-    const result = cohorts.reduce((newObj, cohort) => {
+    const result = cohorts.reduce((acc, cohort) => {
       let instructorsPerMod = instructors.filter(instructor => {
-        return instructor.module === cohort.module;
-      });
-      let newKey = 'cohort' + cohort.cohort;
-      let total = cohort.studentCount / instructorsPerMod.length;
-      newObj[newKey] = total;
-      return newObj;
-    }, {});
+        return instructor.module === cohort.module
+      })
+      let newKey = 'cohort' + cohort.cohort
+      let total = cohort.studentCount / instructorsPerMod.length
+      acc[newKey] = total;
+      return acc
+    }, {})
 
     return result;
 
     // Annotation:
-    // Using two array of object datasets
-    // Filter through each instructor to find where the modules match in each data set
-    // concatenate the new key name
-    // get the total by dividing student count by instructors per mod
-    // assign the total to those values
-    //return the new object with new key value pairs
+    //use reduce to create a new object
+    //cohort name is new and must be concatenated
+    //value is the number of students per instructor
+    //set a variable when instructorsPerMod is equal to instrutor.module === cohort.module
+    //set a new variable to get the concatenated name of the key
+    //set a variable that will calculate how many students per instrutor
+    //return the new object
+
   },
 
   modulesPerTeacher() {
@@ -773,24 +787,25 @@ const turingPrompts = {
             acc[instructor.name] = [];
           }
           if (instructor.teaches.includes(lesson)) {
-            acc[instructor.name].push(cohort.module);
+            acc[instructor.name].push(cohort.module)
           }
-        });
-      });
-      acc[instructor.name] = [...new Set(acc[instructor.name])];
-      return acc;
-    }, {});
-
+        })
+      })
+      acc[instructor.name] = [...new Set(acc[instructor.name])]
+      return acc
+    }, {})
 
     return result;
 
     // Annotation:
-    // start with two arrays of objects
-    // use a reduce on the instructors array of objects
-    // use a for each to loop through the cohort curriculum
-    // use a for each to check the teaches array and see if a lesson is included
-    // if so push the module into the array for the mods a teacher teaches
-    // return an object with instructor name and the mods that they teach
+    //use reduce to access each instructor
+    //use forEach to say if instructor.name is not null
+    //it is an empty arry
+    //if what the instructor teaches includes a specific lesson
+    //then push the cohort module into the instructor array
+    //then set the new array equal to a new array where you cannot see duplicates
+    //return the new object
+
   },
 
   curriculumPerTeacher() {
@@ -803,11 +818,34 @@ const turingPrompts = {
     //   recursion: [ 'Pam', 'Leta' ]
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+  let topics = [];
+  cohorts.forEach((cohort) => {
+    cohort.curriculum.forEach(topic => {
+      if (!topics.includes(topic)) {
+        topics.push(topic)
+      }
+    })
+  })
+
+  const result = topics.reduce((acc, topic) => {
+    acc[topic] = [];
+    instructors.forEach(instructor => {
+      if(instructor.teaches.includes(topic)) {
+        acc[topic].push(instructor.name)
+      }
+    })
+    return acc
+  }, {});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Start with an empty array for topics
+    //use forEach to iterate over the curriculum for each cohort and
+    //if the topic is included then push the topic into the empty array
+    //this will give you an array of strings that you want to be keys in the end object
+    //create a new var
+    //using reduce take the array of strings and for each topic that an instructor teaches
+    //push into the new empty arrays
   }
 };
 
@@ -838,8 +876,19 @@ const bossPrompts = {
     //   { bossName: 'Scar', sidekickLoyalty: 16 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const bossKeys = Object.keys(bosses).map(boss => {
+      let newObj = {}
+      newObj['bossName'] = bosses[boss].name
+      newObj['sidekickLoyalty'] = 0;
+
+      sidekicks.forEach(sidekick => {
+        if (sidekick.boss === bosses[boss].name) {
+          newObj['sidekickLoyalty'] += sidekick.loyaltyToBoss
+        }
+      })
+      return newObj
+    });
+    return bossKeys;
 
     // Annotation:
     // Write your annotation here as a comment
